@@ -1,0 +1,191 @@
+  [1m[35m (2.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.4ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateAuthors (20210308022827)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "authors" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "first_name" varchar, "last_name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20210308022827"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateBooks (20210308022915)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "books" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "description" varchar, "author_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_53d51ce16a"
+FOREIGN KEY ("author_id")
+  REFERENCES "authors" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_books_on_author_id" ON "books" ("author_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20210308022915"]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2021-03-08 02:30:03.850916"], ["updated_at", "2021-03-08 02:30:03.850916"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/authors" for ::1 at 2021-03-08 00:08:46 -0300
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by AuthorsController#index as */*
+  [1m[36mAuthor Load (0.4ms)[0m  [1m[34mSELECT "authors".* FROM "authors"[0m
+  ↳ app/controllers/concerns/response.rb:3:in `json_response'
+Completed 200 OK in 7ms (Views: 1.2ms | ActiveRecord: 0.6ms | Allocations: 2510)
+
+
+Started POST "/authors" for ::1 at 2021-03-08 00:09:13 -0300
+Processing by AuthorsController#create as HTML
+  Parameters: {"first_name"=>"Zygmunt", "last_name"=>"Bauman", "author"=>{"first_name"=>"Zygmunt", "last_name"=>"Bauman"}}
+[31mUnpermitted parameter: :author[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/authors_controller.rb:12:in `create'
+  [1m[36mAuthor Create (0.6ms)[0m  [1m[32mINSERT INTO "authors" ("first_name", "last_name", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["first_name", "Zygmunt"], ["last_name", "Bauman"], ["created_at", "2021-03-08 03:09:13.649420"], ["updated_at", "2021-03-08 03:09:13.649420"]]
+  ↳ app/controllers/authors_controller.rb:12:in `create'
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/authors_controller.rb:12:in `create'
+Completed 201 Created in 8ms (Views: 0.3ms | ActiveRecord: 1.8ms | Allocations: 6074)
+
+
+Started GET "/authors" for ::1 at 2021-03-08 00:09:27 -0300
+Processing by AuthorsController#index as */*
+  [1m[36mAuthor Load (0.1ms)[0m  [1m[34mSELECT "authors".* FROM "authors"[0m
+  ↳ app/controllers/concerns/response.rb:3:in `json_response'
+Completed 200 OK in 1ms (Views: 1.0ms | ActiveRecord: 0.1ms | Allocations: 968)
+
+
+Started GET "/authors" for 127.0.0.1 at 2021-03-08 00:11:35 -0300
+Processing by AuthorsController#index as */*
+  [1m[36mAuthor Load (0.1ms)[0m  [1m[34mSELECT "authors".* FROM "authors"[0m
+  ↳ app/controllers/concerns/response.rb:3:in `json_response'
+Completed 200 OK in 2ms (Views: 1.5ms | ActiveRecord: 0.1ms | Allocations: 954)
+
+
+Started GET "/authors" for 127.0.0.1 at 2021-03-08 00:11:37 -0300
+Processing by AuthorsController#index as */*
+  [1m[36mAuthor Load (0.2ms)[0m  [1m[34mSELECT "authors".* FROM "authors"[0m
+  ↳ app/controllers/concerns/response.rb:3:in `json_response'
+Completed 200 OK in 2ms (Views: 1.2ms | ActiveRecord: 0.2ms | Allocations: 937)
+
+
+Started GET "/authors" for 127.0.0.1 at 2021-03-08 00:11:38 -0300
+Processing by AuthorsController#index as */*
+  [1m[36mAuthor Load (0.1ms)[0m  [1m[34mSELECT "authors".* FROM "authors"[0m
+  ↳ app/controllers/concerns/response.rb:3:in `json_response'
+Completed 200 OK in 1ms (Views: 1.0ms | ActiveRecord: 0.1ms | Allocations: 939)
+
+
+Started GET "/authors" for 127.0.0.1 at 2021-03-08 00:11:38 -0300
+Processing by AuthorsController#index as */*
+  [1m[36mAuthor Load (0.1ms)[0m  [1m[34mSELECT "authors".* FROM "authors"[0m
+  ↳ app/controllers/concerns/response.rb:3:in `json_response'
+Completed 200 OK in 2ms (Views: 1.2ms | ActiveRecord: 0.1ms | Allocations: 937)
+
+
+Started PUT "/authors/1" for ::1 at 2021-03-08 00:12:16 -0300
+Processing by AuthorsController#update as HTML
+  Parameters: {"last_name"=>"Teste", "id"=>"1", "author"=>{"last_name"=>"Teste"}}
+  [1m[36mAuthor Load (0.3ms)[0m  [1m[34mSELECT "authors".* FROM "authors" WHERE "authors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/authors_controller.rb:41:in `set_author'
+[31mUnpermitted parameters: :id, :author[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/authors_controller.rb:23:in `update'
+  [1m[36mAuthor Update (3.1ms)[0m  [1m[33mUPDATE "authors" SET "last_name" = ?, "updated_at" = ? WHERE "authors"."id" = ?[0m  [["last_name", "Teste"], ["updated_at", "2021-03-08 03:12:16.394025"], ["id", 1]]
+  ↳ app/controllers/authors_controller.rb:23:in `update'
+  [1m[35m (1.5ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/authors_controller.rb:23:in `update'
+Completed 204 No Content in 24ms (ActiveRecord: 5.0ms | Allocations: 4975)
+
+
+Started GET "/authors" for 127.0.0.1 at 2021-03-08 00:12:18 -0300
+Processing by AuthorsController#index as */*
+  [1m[36mAuthor Load (0.1ms)[0m  [1m[34mSELECT "authors".* FROM "authors"[0m
+  ↳ app/controllers/concerns/response.rb:3:in `json_response'
+Completed 200 OK in 1ms (Views: 1.0ms | ActiveRecord: 0.1ms | Allocations: 937)
+
+
+Started PUT "/authors/1" for ::1 at 2021-03-08 00:12:28 -0300
+Processing by AuthorsController#update as HTML
+  Parameters: {"last_name"=>"Bauman", "first_name"=>"Teste", "id"=>"1", "author"=>{"first_name"=>"Teste", "last_name"=>"Bauman"}}
+  [1m[36mAuthor Load (0.1ms)[0m  [1m[34mSELECT "authors".* FROM "authors" WHERE "authors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/authors_controller.rb:41:in `set_author'
+[31mUnpermitted parameters: :id, :author[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/authors_controller.rb:23:in `update'
+  [1m[36mAuthor Update (0.3ms)[0m  [1m[33mUPDATE "authors" SET "first_name" = ?, "last_name" = ?, "updated_at" = ? WHERE "authors"."id" = ?[0m  [["first_name", "Teste"], ["last_name", "Bauman"], ["updated_at", "2021-03-08 03:12:28.023143"], ["id", 1]]
+  ↳ app/controllers/authors_controller.rb:23:in `update'
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/authors_controller.rb:23:in `update'
+Completed 204 No Content in 5ms (ActiveRecord: 1.3ms | Allocations: 3002)
+
+
+Started GET "/authors" for 127.0.0.1 at 2021-03-08 00:12:29 -0300
+Processing by AuthorsController#index as */*
+  [1m[36mAuthor Load (0.1ms)[0m  [1m[34mSELECT "authors".* FROM "authors"[0m
+  ↳ app/controllers/concerns/response.rb:3:in `json_response'
+Completed 200 OK in 2ms (Views: 1.3ms | ActiveRecord: 0.1ms | Allocations: 937)
+
+
+Started PUT "/authors/1" for ::1 at 2021-03-08 00:12:39 -0300
+Processing by AuthorsController#update as HTML
+  Parameters: {"last_name"=>"Bauman", "first_name"=>"Zygmunt", "id"=>"1", "author"=>{"first_name"=>"Zygmunt", "last_name"=>"Bauman"}}
+  [1m[36mAuthor Load (0.1ms)[0m  [1m[34mSELECT "authors".* FROM "authors" WHERE "authors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/authors_controller.rb:41:in `set_author'
+[31mUnpermitted parameters: :id, :author[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/authors_controller.rb:23:in `update'
+  [1m[36mAuthor Update (0.6ms)[0m  [1m[33mUPDATE "authors" SET "first_name" = ?, "updated_at" = ? WHERE "authors"."id" = ?[0m  [["first_name", "Zygmunt"], ["updated_at", "2021-03-08 03:12:39.475735"], ["id", 1]]
+  ↳ app/controllers/authors_controller.rb:23:in `update'
+  [1m[35m (0.5ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/authors_controller.rb:23:in `update'
+Completed 204 No Content in 4ms (ActiveRecord: 1.3ms | Allocations: 2989)
+
+
+Started GET "/authors" for 127.0.0.1 at 2021-03-08 00:12:40 -0300
+Processing by AuthorsController#index as */*
+  [1m[36mAuthor Load (0.1ms)[0m  [1m[34mSELECT "authors".* FROM "authors"[0m
+  ↳ app/controllers/concerns/response.rb:3:in `json_response'
+Completed 200 OK in 22ms (Views: 21.8ms | ActiveRecord: 0.1ms | Allocations: 937)
+
+
+Started DELETE "/authors/1" for ::1 at 2021-03-08 00:12:53 -0300
+Processing by AuthorsController#destroy as */*
+  Parameters: {"id"=>"1"}
+  [1m[36mAuthor Load (0.1ms)[0m  [1m[34mSELECT "authors".* FROM "authors" WHERE "authors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/authors_controller.rb:41:in `set_author'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/authors_controller.rb:29:in `destroy'
+  [1m[36mBook Load (0.5ms)[0m  [1m[34mSELECT "books".* FROM "books" WHERE "books"."author_id" = ?[0m  [["author_id", 1]]
+  ↳ app/controllers/authors_controller.rb:29:in `destroy'
+  [1m[36mAuthor Destroy (0.3ms)[0m  [1m[31mDELETE FROM "authors" WHERE "authors"."id" = ?[0m  [["id", 1]]
+  ↳ app/controllers/authors_controller.rb:29:in `destroy'
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/authors_controller.rb:29:in `destroy'
+Completed 204 No Content in 25ms (ActiveRecord: 1.9ms | Allocations: 7919)
+
+
+Started GET "/authors" for 127.0.0.1 at 2021-03-08 00:12:56 -0300
+Processing by AuthorsController#index as */*
+  [1m[36mAuthor Load (0.1ms)[0m  [1m[34mSELECT "authors".* FROM "authors"[0m
+  ↳ app/controllers/concerns/response.rb:3:in `json_response'
+Completed 200 OK in 1ms (Views: 0.7ms | ActiveRecord: 0.1ms | Allocations: 799)
+
+
+Started GET "/authors" for 127.0.0.1 at 2021-03-08 00:12:57 -0300
+Processing by AuthorsController#index as */*
+  [1m[36mAuthor Load (0.1ms)[0m  [1m[34mSELECT "authors".* FROM "authors"[0m
+  ↳ app/controllers/concerns/response.rb:3:in `json_response'
+Completed 200 OK in 2ms (Views: 1.5ms | ActiveRecord: 0.1ms | Allocations: 799)
+
+
+Started GET "/authors" for 127.0.0.1 at 2021-03-08 00:12:58 -0300
+Processing by AuthorsController#index as */*
+  [1m[36mAuthor Load (0.2ms)[0m  [1m[34mSELECT "authors".* FROM "authors"[0m
+  ↳ app/controllers/concerns/response.rb:3:in `json_response'
+Completed 200 OK in 2ms (Views: 1.5ms | ActiveRecord: 0.2ms | Allocations: 799)
+
+
+Started GET "/authors" for 127.0.0.1 at 2021-03-08 00:12:58 -0300
+Processing by AuthorsController#index as */*
+  [1m[36mAuthor Load (0.1ms)[0m  [1m[34mSELECT "authors".* FROM "authors"[0m
+  ↳ app/controllers/concerns/response.rb:3:in `json_response'
+Completed 200 OK in 1ms (Views: 1.0ms | ActiveRecord: 0.1ms | Allocations: 799)
+
+
