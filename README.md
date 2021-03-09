@@ -1,12 +1,17 @@
 # API Rails
 
-To install dependencies: bundle install
-To check possible routes: rails routes
-To run API server local: rails s
+### To install dependencies: 
+- bundle install
 
-* Ruby version: 2.6.0
+### To check possible routes: 
+- rails routes
 
-* System dependencies: 
+### To run API server local: 
+- rails s
+
+#### Ruby version: 2.6.0
+
+#### System dependencies: 
     * Rails 6.0.3
     * SQLite3
     * Puma
@@ -14,7 +19,7 @@ To run API server local: rails s
     * byebug
     * Tests: rspec-rails, factory_bot_rails, shoulda-matchers, faker, database_cleaner
 
-* Database creation
+#### Database creation
     * create_table "authors", force: :cascade do |t|
         * t.string "first_name"
         * t.string "last_name"
@@ -33,7 +38,7 @@ To run API server local: rails s
     
     * add_foreign_key "books", "authors"
 
-* How to run the tests rspec
+#### How to run the tests rspec
     * bundle exec rspec
 
-* ...
+#### ...
